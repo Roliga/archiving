@@ -50,6 +50,8 @@ Derpibooru
 	- page offset
 	- it'll be better for us to use "gte" than this since as posts are updated they jump around in the list, and so a page doesn't necessarily always start at the same offset in the list which might lead to us missing entries
 
+**Example:**
+
 	{
 	 "images": [
 	  {
@@ -122,6 +124,8 @@ The "updated_at" variable in this data can be used for paging. Each time we down
 
 **TODO:** see what parameters are available
 
+**Example:**
+
 	[
 	 {
 	  "id": 42351,
@@ -147,6 +151,8 @@ The "updated_at" variable in this data can be used for paging. Each time we down
 [comments](https://derpibooru.org/lists/recent_comments.json)
 
 **TODO:** see what parameters are available
+
+**Example:**
 
 	[
 	 {
