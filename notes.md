@@ -180,30 +180,31 @@ Initialization
 
 Main loop
 ---------
-1. Download data
 
-2. Decide on retry time
+	1. Download data
 
-3. Find next download link
+	2. Decide on retry time
 
-4. Download images/media, for each post do:
-	1. Check if file is already downloaded
+	3. Find next download link
 
-	2. Find link and download it
+	4. Download images/media, for each post do:
+		1. Check if file is already downloaded
 
-	3. Store as FILE_HASH.FILE_EXTENSION?
-		# Should make the files viewable as well as easy to check for existance
+		2. Find link and download it
 
-	4. what do we do when downloads fail?
-		# Deleted posts will of course not exist, so they should be skipped
-		# For server errors/timeouts we should retry
+		3. Store as FILE_HASH.FILE_EXTENSION?
+			# Should make the files viewable as well as easy to check for existance
 
-5. Store json data
+		4. what do we do when downloads fail?
+			# Deleted posts will of course not exist, so they should be skipped
+			# For server errors/timeouts we should retry
 
-6. Compress json data when a certain amount has been downloaded
+	5. Store json data
 
-7. Store next download link
-	# Do this last so we continue where we left of in case something fails/crashes/is interrupted
+	6. Compress json data when a certain amount has been downloaded
 
-8. Sleep for the retry time we calculated before
+	7. Store next download link
+		# Do this last so we continue where we left of in case something fails/crashes/is interrupted
+
+	8. Sleep for the retry time we calculated before
 
