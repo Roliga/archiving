@@ -11,7 +11,7 @@ File storage
 			[hash].[extension]
 			0a0943b3fe931d507b65d8806f53d3f1.png
 
-The `[hash].[extension]` format suggested here is what e621 already uses for images you download, so that might be convenient here. It would also make it easy both to open and view images since they have appropriate extensions and to look up images from the json data we have since both e621 and derpibooru provide hashes in said json data. They do however both use different hashing algorithms (derpibooru: sha512, e621: md5), and there's always a chance that they change algorithm in the future which would be very problematic. **TODO:** Decide on what name stored images/media should have.
+The `[hash].[extension]` format suggested here is what e621 already uses for images you download, so that might be convenient here. It would also make it easy both to open and view images since they have appropriate extensions and to look up images from the json data we have since both e621 and derpibooru provide hashes in said json data. They do however both use different hashing algorithms (derpibooru: sha512, e621: md5), and there's always a chance that they change algorithm in the future which would be very problematic. **TODO:** Decide on what name stored images/media should have. **NOTE:** Apparently at least derpibooru's check sums are inconsistent. See notes on the derpibooru endpoint.
 
 **TODO:** Do we want to store json entries (that is, individual posts/images/updates/tags..) as individual files, or just store each page we download as individual files?
 
@@ -116,9 +116,9 @@ Derpibooru returns at most 15 images each time we download.
 
 The "updated_at" variable in this data can be used for paging. Each time we download a list of images like this, take the "updated_at" field from the last (read: most recent) entry in the list and use that in the "gte=" parameter for the next download. A slight problem with this though is that the "updated_at" field is *rounded down*, and the "gte=" parameter compares to a more accurate time, so the comparison will always return *at least 1 duplicate*. We can either just ignore this and have at least 1 extra duplicate for every 15 entries, the only penalty being it takes a bit more space (theoretically about 7% more space before compression, though should be a lot less compressed since compression should deal with duplicates really well), or when we download a new set of entries we could look at the previous one and check if we have any duplicates and remove them. That would however complicate our code a bit, hence **TODO:** Figure out if we should deal with duplicates that we download or not?
 
-**TODO:** Figure out what the "interactions" array is for
+The "interactions" array is a list of upvotes or downvotes and such, with entries like: `{"id":293740238,"interaction_type":"voted","value":"up","user_id":9384982,"image_id":1494916}`. As far as I can tell this only seems to be relevant for logged in users, but either way it's probably nothing we need to care about.
 
-**TODO:** What's the difference between "sha512_hash" and "orig_sha512_hash"?
+Apparently "sha512_hash" and "orig_sha512_hash" **are actually not very reliable**. "orig_sha512_hash" is supposed to be the hash before a imagie is optimized on derpibooru's servers, and "sha512_hash" is supposed to be the file they're currently serving (after optimization), however apparently these hashes may not match that of the files that are actually downloaded at least partly because cloudflair also optimizes images. More info [here](https://derpibooru.org/meta/feature-suggestions-and-discussion/post/2932808#post_2932808) and [here](https://derpibooru.org/meta/derpibooru-md5hash-mismatch/post/3186682#post_3186682).
 
 [tags](https://derpibooru.org/tags.json)
 
